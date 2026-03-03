@@ -3,6 +3,8 @@ package main
 import (
 	"net/http"
 
+	"github.com/Derikklok/go-practice-1/internal/models"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -10,13 +12,7 @@ import (
 
 // _ is here will be used becuase the package will be indirectly consumed by gorm
 
-type Student struct {
-	ID    string `json:"id" binding:"required"`
-	Name  string `json:"name" binding:"required"`
-	Grade string `json:"grade" binding:"required,oneof=A B C D F"`
-}
-
-var students []Student
+var students []models.Student
 var db *gorm.DB
 
 func InitDB() {
@@ -26,7 +22,7 @@ func InitDB() {
 		panic("failed to connect to database")
 	}
 	// Migrate the schema (creates the table if it doesn't exist)
-	db.AutoMigrate(&Student{})
+	db.AutoMigrate(&models.Student{})
 }
 
 func main() {
@@ -50,7 +46,7 @@ func main() {
 
 	// Create a new student
 	r.POST("/students", func(ctx *gin.Context) {
-		var newStudent Student
+		var newStudent models.Student
 		if err := ctx.ShouldBindJSON(&newStudent); err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error()})

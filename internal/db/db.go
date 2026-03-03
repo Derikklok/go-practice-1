@@ -12,7 +12,7 @@ var DB *gorm.DB
 
 func InitDB() {
 	var err error
-	DB, err = gorm.Open("sqlite3", "./db/students.db")
+	DB, err = gorm.Open("sqlite3", "./internal/db/students.db")
 	if err != nil {
 		log.Fatal("Failed to connect to the database:", err)
 	}

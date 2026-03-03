@@ -23,7 +23,8 @@ func main() {
 	})
 
 	// routes
-	r.GET("/students",handlers.GetAllStudents)
+	r.GET("/students", handlers.GetAllStudents)
+	r.POST("/students", handlers.CreateStudent)
 
 	r.Run(":8080")
 }

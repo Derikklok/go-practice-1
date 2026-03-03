@@ -37,18 +37,3 @@ func CreateStudent(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusCreated, newStudent)
 }
-
-// func CreateStudent(c *gin.Context) {
-// 	var newStudent db.Student
-// 	if err := c.ShouldBindJSON(&newStudent); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	if err := db.DB.Create(&newStudent).Error; err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusCreated, newStudent)
-// }

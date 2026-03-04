@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/Derikklok/go-practice-1/internal/db"
@@ -28,5 +29,8 @@ func main() {
 	r.PUT("/students/:id", handlers.UpdateStudent)
 	r.DELETE("/students/:id", handlers.DeleteStudent)
 
-	r.Run(":8080")
+	// Run the server on port 8080
+	if err := r.Run(":8080"); err != nil {
+		log.Fatal("Failed to start server:", err)
+	}
 }

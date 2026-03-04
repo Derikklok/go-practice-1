@@ -63,3 +63,16 @@ func UpdateStudent(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, student)
 }
+
+func DeleteStudent(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	if err := db.DB.Where("id = ?", id).Delete(&models.Student{}).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "Student deleted successfully"})
+}

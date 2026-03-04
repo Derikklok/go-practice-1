@@ -37,3 +37,29 @@ func CreateStudent(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusCreated, newStudent)
 }
+
+func UpdateStudent(ctx *gin.Context) {
+	id := ctx.Param("id")
+	var UpdatedStudent models.Student
+	if err := ctx.ShouldBindBodyWithJSON(&UpdatedStudent); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
+
+	if err := db.DB.Model(&models.Student{}).Where("id = ?", id).Updates(&UpdatedStudent).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error()})
+		return
+	}
+
+	// Fetch the updated record from database
+	var student models.Student
+	if err := db.DB.Where("id = ?", id).First(&student).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, student)
+}

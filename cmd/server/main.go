@@ -25,6 +25,7 @@ func main() {
 	// routes
 	r.GET("/students", handlers.GetAllStudents)
 	r.POST("/students", handlers.CreateStudent)
+	r.PUT("/students/:id", handlers.UpdateStudent)
 
 	r.Run(":8080")
 }
